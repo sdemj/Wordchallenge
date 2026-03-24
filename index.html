@@ -15,11 +15,14 @@
     }
 
     .header-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
       margin: 15px auto 25px;
     }
 
     .challenge-title {
-      display: inline-block;
       padding: 15px 40px;
       background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2e9fb 100%);
       background-size: 200% auto;
@@ -32,7 +35,6 @@
       text-shadow: 2px 2px 5px rgba(0,0,0,0.15);
       letter-spacing: 1px;
       border: 4px solid white;
-      margin-bottom: 10px;
     }
 
     @keyframes gradientMove {
@@ -42,7 +44,6 @@
     }
 
     #round-display {
-      display: inline-block;
       background-color: #ffd54f;
       color: #795548;
       padding: 10px 25px;
@@ -50,102 +51,37 @@
       font-weight: bold;
       border-radius: 25px;
       box-shadow: 0 5px 0 #ffb300;
+      white-space: nowrap;
       border: 3px solid white;
-      vertical-align: middle;
-      margin-left: 15px;
-    }
-
-    /* 새로운 가로 레이아웃 컨테이너 */
-    .game-main-layout {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* 워드 박스 (왼쪽) */
-    .word-box {
-      flex: 0 0 200px;
-      background-color: #ffffff;
-      border: 4px dashed #ffab91;
-      border-radius: 25px;
-      padding: 20px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .word-box h2 { margin: 0 0 15px 0; font-size: 1.3rem; color: #ff7043; }
-    
-    /* 한 줄에 한 단어씩 오도록 수정 */
-    .word-box .word-item {
-      display: block;
-      padding: 12px 15px;
-      margin: 10px 0;
-      border-radius: 15px;
-      font-size: 1.1rem; 
-      background-color: #fff9c4;
-      border: 3px solid #fff176;
-      font-weight: 900;
-      color: #555;
-      text-align: center;
-    }
-
-    .word-box .word-found {
-      text-decoration: line-through;
-      color: #bbb;
-      border-color: #eee;
-      background-color: #fafafa;
-    }
-
-    /* 그리드 (중앙) */
-    .grid-wrapper {
-      flex: 0 1 auto;
-    }
-
-    #grid {
-      display: inline-grid;
-      gap: 6px;
-      background-color: #e1f5fe;
-      padding: 12px;
-      border-radius: 20px;
-      border: 5px solid #81d4fa;
-      box-shadow: 0 10px 0 #4fc3f7;
-    }
-
-    /* 타이머 박스 (오른쪽) */
-    .timer-container {
-      flex: 0 0 120px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
     }
 
     .timer-circle-box {
       position: relative;
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .timer-circle-box svg {
       transform: rotate(-90deg);
-      width: 100px;
-      height: 100px;
+      width: 70px;
+      height: 70px;
     }
 
     .timer-circle-box circle {
       fill: white;
-      stroke-width: 10;
-      cx: 50;
-      cy: 50;
-      r: 40;
+      stroke-width: 8;
+      cx: 35;
+      cy: 35;
+      r: 30;
     }
 
     .circle-bg { stroke: #eee; }
     .circle-progress {
       stroke: #ef5350;
-      stroke-dasharray: 251.2;
+      stroke-dasharray: 188.4;
       stroke-dashoffset: 0;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.1s linear;
@@ -158,45 +94,64 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 0.9rem;
       color: #333;
     }
 
     #timer-feedback {
-      margin-top: 15px;
+      position: absolute;
+      width: 100px;
+      top: 75px;
+      left: 50%;
+      transform: translateX(-50%);
       font-weight: 900;
       font-size: 1.1rem;
       color: #ef5350;
       opacity: 0;
       transition: all 0.3s;
-      height: 20px;
+      pointer-events: none;
     }
 
-    .cell {
-      width: 45px;
-      height: 45px;
+    .main-game-container {
       display: flex;
-      align-items: center;
       justify-content: center;
-      border-radius: 12px;
-      user-select: none;
-      cursor: pointer;
-      background-color: #fff;
-      transition: transform 0.1s, background-color 0.2s;
-      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.05);
+      align-items: flex-start;
+      gap: 40px;
+      margin-top: 20px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .cell span { font-size: 1.3rem; font-weight: 800; color: #444; }
-    
-    .cell.temp { background-color: #80deea !important; transform: scale(1.1); color: white !important; z-index: 5; position: relative;}
-    
-    .cell.found { color: white; box-shadow: none; }
-    .cell.found-clr-0 { background-color: #aed581; } 
-    .cell.found-clr-1 { background-color: #ff8a65; } 
-    .cell.found-clr-2 { background-color: #4fc3f7; } 
-    .cell.found-clr-3 { background-color: #ce93d8; } 
-    .cell.found-clr-4 { background-color: #ffd54f; } 
 
-    #message { margin-top: 15px; height: 30px; font-size: 1.2rem; font-weight: bold; }
+    .word-box {
+      width: 160px;
+      background-color: #ffffff;
+      border: 4px dashed #ffab91;
+      border-radius: 25px;
+      padding: 20px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .word-box h2 { margin: 0 0 15px 0; font-size: 1.1rem; color: #ff7043; }
+    
+    .word-box .word-item {
+      display: block; 
+      padding: 8px;
+      margin: 8px 0;
+      border-radius: 20px;
+      font-size: 1rem; 
+      background-color: #fff9c4;
+      border: 3px solid #fff176;
+      font-weight: 900;
+      color: #555;
+    }
+
+    .word-box .word-found {
+      text-decoration: line-through;
+      color: #bbb;
+      border-color: #eee;
+      background-color: #fafafa;
+    }
 
     #modal-overlay {
       position: fixed;
@@ -243,6 +198,48 @@
       box-shadow: 0 6px 0 #e08588;
       transition: all 0.2s;
     }
+
+    .grid-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    #grid {
+      display: inline-grid;
+      gap: 6px;
+      background-color: #e1f5fe;
+      padding: 12px;
+      border-radius: 20px;
+      border: 5px solid #81d4fa;
+      box-shadow: 0 10px 0 #4fc3f7;
+    }
+
+    .cell {
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      user-select: none;
+      cursor: pointer;
+      background-color: #fff;
+      transition: transform 0.1s, background-color 0.2s;
+      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.05);
+    }
+    /* 여기서 text-transform: uppercase;를 제거하여 소문자가 유지되도록 함 */
+    .cell span { font-size: 1.3rem; font-weight: 800; color: #444; }
+    
+    .cell.temp { background-color: #80deea !important; transform: scale(1.1); color: white !important; z-index: 5; position: relative;}
+    
+    .cell.found { color: white; box-shadow: none; }
+    .cell.found-clr-0 { background-color: #aed581; } 
+    .cell.found-clr-1 { background-color: #ff8a65; } 
+    .cell.found-clr-2 { background-color: #4fc3f7; } 
+    .cell.found-clr-3 { background-color: #ce93d8; } 
+    .cell.found-clr-4 { background-color: #ffd54f; } 
+
+    #message { margin-top: 15px; height: 30px; font-size: 1.2rem; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -250,31 +247,28 @@
   <div class="header-container">
     <div class="challenge-title">Word Challenge</div>
     <div id="round-display">Round 1</div>
-  </div>
-
-  <div class="game-main-layout">
-    <div class="word-box">
-      <h2>🌟 Word Box 🌟</h2>
-      <div id="word-list"></div>
-    </div>
-    
-    <div class="grid-wrapper">
-      <div id="grid"></div>
-    </div>
-
-    <div class="timer-container">
-      <div class="timer-circle-box">
-        <svg>
-          <circle class="circle-bg"></circle>
-          <circle id="timer-circle" class="circle-progress"></circle>
-        </svg>
-        <div id="timer-text">5:00</div>
-      </div>
+    <div class="timer-circle-box">
+      <svg>
+        <circle class="circle-bg"></circle>
+        <circle id="timer-circle" class="circle-progress"></circle>
+      </svg>
+      <div id="timer-text">5:00</div>
       <div id="timer-feedback"></div>
     </div>
   </div>
 
-  <div id="message"></div>
+  <div class="main-game-container">
+    <div class="side-panel">
+      <div class="word-box">
+        <h2>🌟 Word Box 🌟</h2>
+        <div id="word-list"></div>
+      </div>
+    </div>
+
+    <div class="grid-wrapper">
+      <div id="grid"></div>
+    </div>
+  </div>
 
   <div id="modal-overlay">
     <div class="modal-content" id="modal-content">
@@ -282,6 +276,8 @@
       <button class="next-btn" onclick="goToNextRound()">Next Round!</button>
     </div>
   </div>
+
+  <div id="message"></div>
 
   <script>
     const ALL_WORDS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -292,7 +288,7 @@
     const INITIAL_TIME = 300; 
     let timeLeft = INITIAL_TIME;
     let timerInterval = null;
-    const CIRCUMFERENCE = 2 * Math.PI * 40;
+    const CIRCUMFERENCE = 2 * Math.PI * 30;
 
     function resetRound() {
       closeModal();
@@ -306,7 +302,7 @@
       
       const maxWordLen = Math.max(...currentWords.map(w => w.length));
       
-      if (round === 1) { rows = 9; cols = 9; }
+      if (round === 1) { rows = 9; cols = 9; } 
       else { if (round % 2 === 0) cols++; else rows++; }
       
       rows = Math.max(rows, maxWordLen);
@@ -351,10 +347,10 @@
       const fb = document.getElementById("timer-feedback");
       fb.textContent = txt;
       fb.style.opacity = "1";
-      fb.style.transform = "translateY(-5px)";
+      fb.style.transform = "translateX(-50%) translateY(-5px)";
       setTimeout(() => {
         fb.style.opacity = "0";
-        fb.style.transform = "translateY(0px)";
+        fb.style.transform = "translateX(-50%) translateY(0px)";
       }, 1000);
     }
 
@@ -398,7 +394,7 @@
       for (let word of currentWords) {
         let placed = false, attempts = 0;
         const targetWord = word.toLowerCase();
-        while (!placed && attempts < 300) {
+        while (!placed && attempts < 300) { 
           const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
           const r = Math.floor(Math.random() * rows), c = Math.floor(Math.random() * cols);
           if (canPlace(targetWord, r, c, dr, dc)) {
@@ -409,12 +405,6 @@
         }
         if (!placed) return false; 
       }
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; r++) { // 무한루프 방지를 위해 r++ 수정필요 (아래 수정됨)
-          // r++은 오타였으므로 로직 정상화
-        }
-      }
-      // 격자 채우기 로직 안정화
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           if (gridData[r][c] === null) gridData[r][c] = String.fromCharCode(97 + Math.floor(Math.random() * 26));
