@@ -227,7 +227,6 @@
       transition: transform 0.1s, background-color 0.2s;
       box-shadow: inset 0 -3px 0 rgba(0,0,0,0.05);
     }
-    /* 여기서 text-transform: uppercase;를 제거하여 소문자가 유지되도록 함 */
     .cell span { font-size: 1.3rem; font-weight: 800; color: #444; }
     
     .cell.temp { background-color: #80deea !important; transform: scale(1.1); color: white !important; z-index: 5; position: relative;}
@@ -297,14 +296,18 @@
       currentSelection = [];
       document.getElementById("round-display").textContent = `Round ${round}`;
       
-      currentWords = pickRandomWords(5);
+      // 라운드에 따라 단어 수 조절 (Round 1: 3개, Round 2: 4개...)
+      const wordCount = round + 2;
+      currentWords = pickRandomWords(wordCount);
       wordColors = currentWords.map((_, i) => i % 5); 
       
       const maxWordLen = Math.max(...currentWords.map(w => w.length));
       
+      // 라운드 1 기본 크기 설정
       if (round === 1) { rows = 9; cols = 9; } 
       else { if (round % 2 === 0) cols++; else rows++; }
       
+      // 격자가 단어보다 작아지지 않도록 보정
       rows = Math.max(rows, maxWordLen);
       cols = Math.max(cols, maxWordLen);
       
@@ -384,8 +387,10 @@
     }
 
     function pickRandomWords(count) {
+      // 리스트보다 더 많은 단어를 요청할 경우를 대비해 예외 처리
+      const safeCount = Math.min(count, ALL_WORDS.length);
       const shuffled = [...ALL_WORDS].sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, count);
+      return shuffled.slice(0, safeCount);
     }
 
     function generateGrid() {
@@ -394,7 +399,7 @@
       for (let word of currentWords) {
         let placed = false, attempts = 0;
         const targetWord = word.toLowerCase();
-        while (!placed && attempts < 300) { 
+        while (!placed && attempts < 400) { // 단어가 많아질수록 배치 난이도가 올라가므로 시도 횟수 상향
           const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
           const r = Math.floor(Math.random() * rows), c = Math.floor(Math.random() * cols);
           if (canPlace(targetWord, r, c, dr, dc)) {
