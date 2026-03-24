@@ -221,7 +221,8 @@
       transition: transform 0.1s, background-color 0.2s;
       box-shadow: inset 0 -3px 0 rgba(0,0,0,0.05);
     }
-    .cell span { text-transform: uppercase; font-size: 1.3rem; font-weight: 800; color: #444; }
+    /* 소문자 유지를 위해 text-transform 제거 */
+    .cell span { font-size: 1.3rem; font-weight: 800; color: #444; }
     
     .cell.temp { background-color: #80deea !important; transform: scale(1.1); color: white !important; z-index: 5; position: relative;}
     
@@ -229,6 +230,8 @@
     .cell.found-clr-0 { background-color: #aed581; } 
     .cell.found-clr-1 { background-color: #ff8a65; } 
     .cell.found-clr-2 { background-color: #4fc3f7; } 
+    .cell.found-clr-3 { background-color: #ce93d8; } 
+    .cell.found-clr-4 { background-color: #ffd54f; } 
 
     #message { margin-top: 15px; height: 30px; font-size: 1.2rem; font-weight: bold; }
   </style>
@@ -275,7 +278,6 @@
     let gridData = [], currentSelection = [], foundWords = new Set(), foundCells = new Map(); 
     let round = 1, currentWords = [], wordColors = [], rows = 0, cols = 0;
     
-    // 초기 시간 5분(300초) 설정
     const INITIAL_TIME = 300; 
     let timeLeft = INITIAL_TIME;
     let timerInterval = null;
@@ -287,25 +289,23 @@
       foundCells.clear();
       currentSelection = [];
       document.getElementById("round-display").textContent = `Round ${round}`;
-      currentWords = pickRandomWords(3);
-      wordColors = currentWords.map((_, i) => i % 3); 
+      
+      currentWords = pickRandomWords(5);
+      wordColors = currentWords.map((_, i) => i % 5); 
+      
       const maxWordLen = Math.max(...currentWords.map(w => w.length));
       
-      // 라운드가 넘어가도 timeLeft를 초기화하지 않음 (게임 처음 시작 시에만 5분)
-      if (round === 1 && foundWords.size === 0 && foundCells.size === 0 && !timerInterval) {
-         timeLeft = INITIAL_TIME;
-      }
-
-      if (round === 1) { rows = 7; cols = 7; }
+      if (round === 1) { rows = 9; cols = 9; }
       else { if (round % 2 === 0) cols++; else rows++; }
+      
       rows = Math.max(rows, maxWordLen);
       cols = Math.max(cols, maxWordLen);
+      
       let success = false;
       while (!success) { success = generateGrid(); }
       renderGrid();
       renderWordBox();
       
-      // 타이머가 이미 돌아가고 있다면 다시 시작하지 않음 (시간 유지)
       if (!timerInterval) startTimer();
     }
 
@@ -328,7 +328,6 @@
     function updateTimerUI() {
       const circle = document.getElementById("timer-circle");
       const text = document.getElementById("timer-text");
-      // 게이지는 5분을 기준으로 비율 표시 (5분 넘어가면 꽉 참)
       const offset = CIRCUMFERENCE - (Math.min(timeLeft, INITIAL_TIME) / INITIAL_TIME) * CIRCUMFERENCE;
       circle.style.strokeDashoffset = Math.max(0, offset);
 
@@ -365,10 +364,7 @@
 
     function goToNextRound() {
       round++;
-      // 모달 닫고 격자만 새로 생성 (타이머는 이미 setInterval로 흐르는 중)
       resetRound();
-      // 라운드 전환 후 타이머를 명시적으로 재개 (이미 흐르고 있다면 내부에서 걸러짐)
-      if (!timerInterval) startTimer();
     }
 
     function gameOver() {
@@ -391,7 +387,7 @@
       for (let word of currentWords) {
         let placed = false, attempts = 0;
         const targetWord = word.toLowerCase();
-        while (!placed && attempts < 200) {
+        while (!placed && attempts < 300) {
           const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
           const r = Math.floor(Math.random() * rows), c = Math.floor(Math.random() * cols);
           if (canPlace(targetWord, r, c, dr, dc)) {
@@ -433,7 +429,7 @@
           const key = `${r},${c}`;
           if (foundCells.has(key)) {
             const colorIndex = foundCells.get(key);
-            cell.classList.add("found", `found-clr-${colorIndex}`);
+            cell.classList.add("found", `found-clr-${colorIndex % 5}`);
           }
           if (currentSelection.some(p => p.r === r && p.c === c)) {
             cell.classList.add("temp");
@@ -503,14 +499,13 @@
           showMessage(`${matchWord} 정답!`, getWordColorStr(colorIndex));
           currentSelection = []; 
           if (foundWords.size === currentWords.length) {
-            // 라운드 클리어 시에도 타이머를 멈추지 않음 (그대로 흐르게 둠)
             setTimeout(() => { showModal("Round " + round + " Clear!"); }, 500);
           }
         }
       }
     }
 
-    function getWordColorStr(index) { return ['#aed581', '#ff8a65', '#4fc3f7'][index % 3]; }
+    function getWordColorStr(index) { return ['#aed581', '#ff8a65', '#4fc3f7', '#ce93d8', '#ffd54f'][index % 5]; }
     function showMessage(txt, color = "#ff7043") {
       const msgEl = document.getElementById("message");
       msgEl.textContent = txt;
