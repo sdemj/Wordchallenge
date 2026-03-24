@@ -7,7 +7,7 @@
     body {
       font-family: 'Nanum Gothic', sans-serif;
       text-align: center;
-      padding: 25px; /* 125% */
+      padding: 25px; 
       margin: 0;
       background-color: #f0faff;
       color: #333;
@@ -18,19 +18,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 19px; /* 125% */
-      margin: 19px auto 31px; /* 125% */
+      gap: 19px; 
+      margin: 19px auto 31px; 
     }
 
     .challenge-title {
-      padding: 19px 50px; /* 125% */
+      padding: 19px 50px; 
       background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 25%, #fbc2eb 50%, #a1c4fd 75%, #c2e9fb 100%);
       background-size: 200% auto;
       animation: gradientMove 3s linear infinite;
       color: white;
-      font-size: 2.75rem; /* 125% (2.2 -> 2.75) */
+      font-size: 2.75rem; 
       font-weight: 900;
-      border-radius: 75px; /* 125% */
+      border-radius: 75px; 
       box-shadow: 0 10px 0 #e08588, 0 19px 31px rgba(0, 0, 0, 0.1);
       text-shadow: 2px 2px 6px rgba(0,0,0,0.15);
       letter-spacing: 1.25px;
@@ -46,8 +46,8 @@
     #round-display {
       background-color: #ffd54f;
       color: #795548;
-      padding: 12px 31px; /* 125% */
-      font-size: 1.6rem; /* 125% (1.3 -> 1.6) */
+      padding: 12px 31px; 
+      font-size: 1.6rem; 
       font-weight: bold;
       border-radius: 31px;
       box-shadow: 0 6px 0 #ffb300;
@@ -55,10 +55,9 @@
       border: 4px solid white;
     }
 
-    /* 타이머 크기 125% 확대 */
     .timer-circle-box {
       position: relative;
-      width: 88px; /* 70 * 1.25 */
+      width: 88px; 
       height: 88px;
       display: flex;
       align-items: center;
@@ -73,16 +72,16 @@
 
     .timer-circle-box circle {
       fill: white;
-      stroke-width: 10; /* 8 * 1.25 */
+      stroke-width: 10; 
       cx: 44;
       cy: 44;
-      r: 37.5; /* 30 * 1.25 */
+      r: 37.5; 
     }
 
     .circle-bg { stroke: #eee; }
     .circle-progress {
       stroke: #ef5350;
-      stroke-dasharray: 235.6; /* 2 * pi * 37.5 */
+      stroke-dasharray: 235.6; 
       stroke-dashoffset: 0;
       stroke-linecap: round;
       transition: stroke-dashoffset 0.1s linear;
@@ -95,18 +94,18 @@
       left: 50%;
       transform: translate(-50%, -50%);
       font-weight: bold;
-      font-size: 1.1rem; /* 125% */
+      font-size: 1.1rem; 
       color: #333;
     }
 
     #timer-feedback {
       position: absolute;
       width: 125px;
-      top: 94px; /* 위치 조정 */
+      top: 94px; 
       left: 50%;
       transform: translateX(-50%);
       font-weight: 900;
-      font-size: 1.35rem; /* 125% */
+      font-size: 1.35rem; 
       color: #ef5350;
       opacity: 0;
       transition: all 0.3s;
@@ -117,7 +116,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      gap: 50px; /* 40 * 1.25 */
+      gap: 50px; 
       margin-top: 25px;
       max-width: 1500px;
       margin-left: auto;
@@ -125,7 +124,7 @@
     }
 
     .word-box {
-      width: 200px; /* 160 * 1.25 */
+      width: 200px; 
       background-color: #ffffff;
       border: 5px dashed #ffab91;
       border-radius: 31px;
@@ -140,7 +139,7 @@
       padding: 10px;
       margin: 10px 0;
       border-radius: 25px;
-      font-size: 1.25rem; /* 125% */
+      font-size: 1.25rem; 
       background-color: #fff9c4;
       border: 4px solid #fff176;
       font-weight: 900;
@@ -195,10 +194,9 @@
       transition: all 0.2s;
     }
 
-    /* 격자 크기 확대 */
     #grid {
       display: inline-grid;
-      gap: 7.5px; /* 6 * 1.25 */
+      gap: 7.5px; 
       background-color: #e1f5fe;
       padding: 15px;
       border-radius: 25px;
@@ -207,8 +205,8 @@
     }
 
     .cell {
-      width: 56px; /* 45 * 1.25 */
-      height: 56px; /* 45 * 1.25 */
+      width: 56px; 
+      height: 56px; 
       display: flex;
       align-items: center;
       justify-content: center;
@@ -236,7 +234,7 @@
 <body>
 
   <div class="header-container">
-    <div class="challenge-title">Word Challenge</div>
+    <div class="challenge-title">Word Catch 300</div>
     <div id="round-display">Round 1</div>
     <div class="timer-circle-box">
       <svg>
@@ -279,7 +277,7 @@
     const INITIAL_TIME = 300; 
     let timeLeft = INITIAL_TIME;
     let timerInterval = null;
-    const CIRCUMFERENCE = 2 * Math.PI * 37.5; // 확대된 반지름 37.5 적용
+    const CIRCUMFERENCE = 2 * Math.PI * 37.5; 
 
     function resetRound() {
       closeModal();
@@ -351,7 +349,7 @@
       
       const gridWidth = grid.offsetWidth;
       const gridHeight = grid.offsetHeight;
-      modalContent.style.width = (gridWidth + 40) + "px"; // 여유공간 추가
+      modalContent.style.width = (gridWidth + 40) + "px"; 
       modalContent.style.height = (gridHeight + 40) + "px";
       
       document.getElementById("modal-title").textContent = title;
@@ -432,7 +430,6 @@
     function renderGrid() {
       const gridEl = document.getElementById("grid");
       gridEl.innerHTML = "";
-      // 125% 확대된 셀 크기 56px 적용
       gridEl.style.gridTemplateColumns = `repeat(${cols}, 56px)`;
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
